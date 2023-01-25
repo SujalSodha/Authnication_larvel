@@ -59,7 +59,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/customer/view') }}">Customers</a>
                 </li>
-
             </ul>
         </div>
     </nav>

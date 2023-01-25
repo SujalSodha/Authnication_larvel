@@ -22,15 +22,18 @@ Route::get("/",function(){
     return view("/layout/index");
 });
 
-Route::get("/customer", [CutomerController::class, "index"]);
-Route::post("/customer", [CutomerController::class, "store"]);
-Route::get("/customer/delete/{id}",[CutomerController::class,"delete"])->name("customer.delete");
-Route::get("/customer/force-delete/{id}",[CutomerController::class,"forceDelete"])->name("customer.force-delete");
-Route::get('/customer/view', [CutomerController::class, "view"]);
-Route::get("/customer/edit/{id}",[CutomerController::class,"edit"])->name("customer.edit");
-Route::post("/customer/update/{id}",[CutomerController::class,"update"])->name("customer.update");
-Route::get('/customer/trash', [CutomerController::class, "trash"]);
-Route::get("/customer/restore/{id}",[CutomerController::class,"restore"])->name("customer.restore");
+
+Route::group(['prefix' => '/customer'],function(){
+    Route::get("", [CutomerController::class, "index"]);
+    Route::post("", [CutomerController::class, "store"]);
+    Route::get("/delete/{id}",[CutomerController::class,"delete"])->name("customer.delete");
+    Route::get("/force-delete/{id}",[CutomerController::class,"forceDelete"])->name("customer.force-delete");
+    Route::get('/view', [CutomerController::class, "view"]);
+    Route::get("/edit/{id}",[CutomerController::class,"edit"])->name("customer.edit");
+    Route::post("/update/{id}",[CutomerController::class,"update"])->name("customer.update");
+    Route::get('/trash', [CutomerController::class, "trash"]);
+    Route::get("/restore/{id}",[CutomerController::class,"restore"])->name("customer.restore");
+});
 
 // collactive form in all routes for student 
 
@@ -48,3 +51,6 @@ Route::get("/upload",function(){
     return view("upload");
 });
 Route::post("/upload",[UploadController::class,"upload"]);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

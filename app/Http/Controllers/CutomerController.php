@@ -18,9 +18,6 @@ class CutomerController extends Controller
     public function store(Request $request)
     {
 
-        // echo "<pre>";
-        // print_r($request->all());
-
         // laravel in insert query
         $customer = new Customers;
         $customer->name = $request['name'];
@@ -41,11 +38,11 @@ class CutomerController extends Controller
         
         if($search != ""){
             // where
-            $customers = Customers::where('name','LIKE','%'.$search.'%')->orWhere('email','LIKE','%'.$search.'%')->paginate(5);
+            $customers = Customers::where('name','LIKE','%'.$search.'%')->orWhere('email','LIKE','%'.$search.'%')->simplePaginate(20);  
             // dd($customers);
         }else{
 
-            $customers = Customers::paginate(5);
+            $customers = Customers::simplePaginate(20);
         }
         $data = compact("customers");
         return view("customer-view")->with($data);
@@ -91,12 +88,13 @@ class CutomerController extends Controller
             // not  found
             return redirect('customer/view');
         } else {
-            $title = "Upadate Customer";
+            $title = "Upadate Customer";    
             $url = url("/customer/update") . "/" . $id;
             $data = compact('customer', 'url', 'title');
             return view('customer')->with($data);
         }
     }
+    
     public function update($id, Request $request)
     {
         $customer = Customers::find($id);

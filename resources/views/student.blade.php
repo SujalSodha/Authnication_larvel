@@ -56,6 +56,7 @@
 
     {!! Form::text('name', old('name'), [
         'placeholder' => 'name',  
+
     ]) !!}
 
     {!! Form::text('country', '', [
